@@ -17,13 +17,15 @@ class HistoryTableSeeder extends Seeder
 			'price' => 50.00,
 		]);
 
-	    \App\HistoryEntry::create([
-		    'child_id' => 1,
-		    'name' => 'Igracka supermen',
-		    'category_id' => 1,
-		    'price' => 10.00,
-		    'photo_url' => 'https://picsum.photos/400/200/?image=208',
-	    ]);
+		for($i=0; $i<100; $i++) {
+			\App\HistoryEntry::create([
+				'child_id' => 1,
+				'name' => "Igracka supermen ($i)" ,
+				'category_id' => 1,
+				'price' => 10.00,
+				'photo_url' => 'https://picsum.photos/400/200/?image=208',
+			]);
+		}
 
 	    \App\HistoryEntry::create([
 		    'child_id' => 1,

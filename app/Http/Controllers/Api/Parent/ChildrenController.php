@@ -47,15 +47,17 @@ class ChildrenController extends Controller
 	 */
     public function store(Request $request)
     {
+		\Log::info($request->getContent());
+
 	    $parent = UserProvider::parentt($request);
     	$child = new Child();
 
-    	$filename = basename($request->file('photo')->store('children/photos'));
+    	$filename = basename($request->file('photo')->store('public/children/photos'));
 
     	$child->parent_id = $parent->id;
     	$child->name = $request->get('name');
-    	$child->photo_url = "http://dzeparac.me/children/photos/{$filename}";
-    	$child->code = str_random(10);
+    	$child->photo_url = "http://dzeparac.test/storage/children/photos/{$filename}";
+    	$child->code = strtoupper(str_random(10));
     	$child->save();
 
     	return [ "data" => $child ];
@@ -70,11 +72,14 @@ class ChildrenController extends Controller
 	 */
     public function update(Request $request, Child $child)
     {
-	    $filename = basename($request->file('photo')->store('children/photos'));
+		$child->name = $request->get('name');
+		$child->code = strtoupper(str_random(10));
 
-	    $child->name = $request->get('name');
-	    $child->photo_url = "http://dzeparac.me/children/photos/{$filename}";
-	    $child->code = str_random(10);
+		if( $request->has("photo") ) {
+			$filename = basename($request->file('photo')->store('children/photos'));
+			$child->photo_url = "http://dzeparac.me/children/photos/{$filename}";
+		}
+	    
 	    $child->save();
 
 	    return [ "data" => $child ];
