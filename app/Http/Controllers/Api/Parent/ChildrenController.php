@@ -36,7 +36,7 @@ class ChildrenController extends Controller
 	 */
     public function child(Request $request, Child $child)
     {
-    	return [ "data" => $child ];;
+    	return [ "data" => $child ];
     }
 
 
