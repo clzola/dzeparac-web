@@ -14,6 +14,9 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        if($request->has("id"))
+          return ["data" => Child::findOrFail($request->get("id"))];
+
         $child = Child::whereCode($request->get("code", "1"))->first();
 
         if( is_null($child) ) {

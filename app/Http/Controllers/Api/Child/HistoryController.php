@@ -19,7 +19,7 @@ class HistoryController extends Controller
      */
     public function __construct(Request $request)
     {
-        $this->child = $request->get("child");
+        $this->child = $request->get("user");
     }
 
 
@@ -30,6 +30,7 @@ class HistoryController extends Controller
     public function index(Request $request)
     {
         $query = HistoryEntry::with(['category', 'wish', 'wish.tasks'])
+                             ->latest()
                              ->whereChildId($this->child->id);
 
         if($request->has('category_id')) {
@@ -54,6 +55,9 @@ class HistoryController extends Controller
         $entry->photo_url = "http://dzeparac.test/storage/history/photos/{$filename}";
         $entry->child_id = $this->child->id;
         $entry->save();
+
+        $this->child->money -= $entry->price;
+        $this->child->save();
 
         return ["data" => $entry];
     }
@@ -85,6 +89,7 @@ class HistoryController extends Controller
         }
 
         $entry->save();
+        $entry->load("category");
         return ["data" => $entry];
     }
 }

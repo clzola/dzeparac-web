@@ -19,16 +19,16 @@ class WishesController extends Controller
      */
     public function __construct(Request $request)
     {
-        $this->child = $request->get('child');
+        $this->child = $request->get('user');
     }
 
 
     /**
      * @return array
      */
-    public function index()
+    public function index(Request $request)
     {
-        $wishes = $this->child->wishes()->where('fulfilled', false)->with(['tasks'])->get();
+        $wishes = $this->child->wishes()->where('flag_fulfilled', false)->with(['tasks', 'category'])->get();
         return [ "data" => $wishes ];
     }
 

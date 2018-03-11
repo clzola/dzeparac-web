@@ -79,7 +79,7 @@ class ChildrenController extends Controller
 			$filename = basename($request->file('photo')->store('children/photos'));
 			$child->photo_url = "http://dzeparac.me/children/photos/{$filename}";
 		}
-	    
+
 	    $child->save();
 
 	    return [ "data" => $child ];

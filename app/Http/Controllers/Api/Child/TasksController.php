@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Child;
 
 use App\Child;
 use App\Task;
+use App\Wish;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,12 +29,25 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $wishes = $this->child->wishes()->where('fulfilled', false)->with('tasks')->get();
+        $wishes = $this->child->wishes()->where('flag_fulfilled', false)->with('tasks')->get();
 
-        $tasks = [];
+        $tasks = [
+            "tasks" => [],
+            "finished" => [],
+            "completed" => [],
+        ];
+
         foreach ($wishes as $wish) {
-            foreach ($wish->tasks as $task)
-                $tasks[] = $task;
+            foreach ($wish->tasks as $task) {
+                $task->setRelation("wish", new Wish(["name" => $wish->name]));
+
+                if( !$task->child_completed )
+                    $tasks["tasks"][] = $task;
+                else if ($task->child_completed && !$task->parent_completed)
+                    $tasks["finished"][] = $task;
+                else if ($task->child_completed && $task->parent_completed)
+                    $tasks["completed"][] = $task;
+            }
         }
 
         return ["data" => $tasks];

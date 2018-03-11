@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Child;
 
 use App\Child;
+use App\HistoryEntry;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,5 +29,23 @@ class DzeparacController extends Controller
     public function index()
     {
         return ["data" => $this->child->money];
+    }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function add(Request $request)
+    {
+        $this->child->money += doubleval($request->get('price'));
+        $this->child->save();
+
+        $entry = $entry = new HistoryEntry($request->only(['price', 'notes']));
+        $entry->name = 'Džeparac';
+        $entry->child_id = $this->child->id;
+        $entry->save();
+
+        return [ "data" => $entry ];
     }
 }

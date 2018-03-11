@@ -44,10 +44,11 @@ Route::group(["prefix" => "child", 'namespace' => 'Api\Child'], function() {
     Route::post('/wishes/{wish}/update', 'WishesController@update');
 
     Route::get('/tasks', 'TasksController@index');
-    Route::get('/tasks/{task}/complete', 'TasksController@markAsCompleted');
-    Route::get('/tasks/{task}/complete/revert', 'TasksController@markAsNotCompleted');
+    Route::post('/tasks/{task}/complete', 'TasksController@markAsCompleted');
+    Route::post('/tasks/{task}/complete/revert', 'TasksController@markAsNotCompleted');
 
     Route::get('/dzeparac', 'DzeparacController@index');
+    Route::post('/dzeparac/add', 'DzeparacController@add');
 
     Route::get('/history', 'HistoryController@index');
     Route::get('/history/{entry}', 'HistoryController@show');
