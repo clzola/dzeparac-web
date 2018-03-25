@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Parent;
+namespace Dzeparac\Http\Controllers\Api\Parent;
 
-use App\Child;
-use App\Http\Controllers\Controller;
-use App\Wish;
+use Dzeparac\Child;
+use Dzeparac\Http\Controllers\Controller;
+use Dzeparac\Wish;
 
 
 class WishesController extends Controller

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Parent;
+namespace Dzeparac\Http\Controllers\Api\Parent;
 
-use App\Child;
-use App\Support\UserProvider;
+use Dzeparac\Child;
+use Dzeparac\Support\UserProvider;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Dzeparac\Http\Controllers\Controller;
 
 class ChildrenController extends Controller
 {

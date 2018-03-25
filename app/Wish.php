@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace Dzeparac;
 
 use Illuminate\Database\Eloquent\Model;
 
 
 /**
- * App\Wish
+ * Dzeparac\Wish
  *
  * @property int $id
  * @property int $child_id
@@ -18,19 +18,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $flag_fulfilled
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Category $category
- * @property-read \App\Child $child
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereChildId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereFlagFulfilled($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereNotes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish wherePhotoUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Wish whereUpdatedAt($value)
+ * @property-read \Dzeparac\Category $category
+ * @property-read \Dzeparac\Child $child
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Task[] $tasks
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereChildId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereFlagFulfilled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish wherePhotoUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Wish extends Model

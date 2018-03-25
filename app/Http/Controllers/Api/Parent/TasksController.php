@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Parent;
+namespace Dzeparac\Http\Controllers\Api\Parent;
 
-use App\Child;
-use App\Task;
-use App\Wish;
+use Dzeparac\Child;
+use Dzeparac\Task;
+use Dzeparac\Wish;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Dzeparac\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {

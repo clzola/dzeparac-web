@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Middleware\Api;
+namespace Dzeparac\Http\Middleware\Api;
 
-use App\Child;
-use App\Parentt;
+use Dzeparac\Child;
+use Dzeparac\Parentt;
 use Closure;
 
 class XUserMiddleware

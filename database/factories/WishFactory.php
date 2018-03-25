@@ -1,6 +1,6 @@
 <?php
 
-use App\Wish;
+use Dzeparac\Wish;
 use Faker\Generator as Faker;
 
 $factory->define(Wish::class, function (Faker $faker) {

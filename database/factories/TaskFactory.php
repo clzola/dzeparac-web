@@ -1,6 +1,6 @@
 <?php
 
-use App\Task;
+use Dzeparac\Task;
 use Faker\Generator as Faker;
 
 $factory->define(Task::class, function (Faker $faker) {

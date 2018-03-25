@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace Dzeparac;
 
 use Illuminate\Database\Eloquent\Model;
 
 
 /**
- * App\HistoryEntry
+ * Dzeparac\HistoryEntry
  *
  * @property int $id
  * @property int $child_id
@@ -18,19 +18,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $wish_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Category|null $category
- * @property-read \App\Child $child
- * @property-read \App\Wish|null $wish
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereChildId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereNotes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry wherePhotoUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\HistoryEntry whereWishId($value)
+ * @property-read \Dzeparac\Category|null $category
+ * @property-read \Dzeparac\Child $child
+ * @property-read \Dzeparac\Wish|null $wish
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereChildId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry wherePhotoUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereWishId($value)
  * @mixin \Eloquent
  */
 class HistoryEntry extends Model

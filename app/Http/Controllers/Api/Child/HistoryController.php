@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Child;
+namespace Dzeparac\Http\Controllers\Api\Child;
 
-use App\Child;
-use App\HistoryEntry;
-use App\Http\Controllers\Controller;
+use Dzeparac\Child;
+use Dzeparac\HistoryEntry;
+use Dzeparac\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-use App\HistoryEntry;
+use Dzeparac\HistoryEntry;
 use Faker\Generator as Faker;
 
 $factory->define( HistoryEntry::class, function (Faker $faker) {

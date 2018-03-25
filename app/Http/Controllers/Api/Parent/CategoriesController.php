@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Parent;
+namespace Dzeparac\Http\Controllers\Api\Parent;
 
-use App\Category;
+use Dzeparac\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Dzeparac\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {

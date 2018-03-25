@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Support;
+namespace Dzeparac\Support;
 
-use App\Child;
-use App\Parentt;
+use Dzeparac\Child;
+use Dzeparac\Parentt;
 use Illuminate\Http\Request;
 
 class UserProvider

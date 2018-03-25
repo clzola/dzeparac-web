@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Child;
+namespace Dzeparac\Http\Controllers\Api\Child;
 
-use App\Child;
-use App\HistoryEntry;
+use Dzeparac\Child;
+use Dzeparac\HistoryEntry;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Dzeparac\Http\Controllers\Controller;
 
 class DzeparacController extends Controller
 {

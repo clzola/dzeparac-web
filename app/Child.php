@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace Dzeparac;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 
 /**
- * App\Child
+ * Dzeparac\Child
  *
  * @property int $id
  * @property int $parent_id
@@ -17,18 +17,18 @@ use Illuminate\Foundation\Auth\User;
  * @property float $money
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\HistoryEntry[] $historyEntries
- * @property-read \App\Parentt $parentt
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wish[] $wishes
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereMoney($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child wherePhotoUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Child whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\HistoryEntry[] $historyEntries
+ * @property-read \Dzeparac\Parentt $parentt
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Task[] $tasks
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Wish[] $wishes
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child wherePhotoUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Child whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Child extends User

@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace Dzeparac;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 
 /**
- * App\Parentt
+ * Dzeparac\Parentt
  *
  * @property int $id
  * @property string $username
@@ -15,13 +15,13 @@ use Illuminate\Foundation\Auth\User;
  * @property string $password
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Child[] $children
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Parentt whereUsername($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Child[] $children
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Parentt whereUsername($value)
  * @mixin \Eloquent
  */
 class Parentt extends User

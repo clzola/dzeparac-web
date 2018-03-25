@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace Dzeparac;
 
 use Illuminate\Database\Eloquent\Model;
 
 
 /**
- * App\Task
+ * Dzeparac\Task
  *
  * @property int $id
  * @property int $wish_id
@@ -17,15 +17,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $fulfilled
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \App\Child $child
- * @property-read \App\Wish $wish
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereChildCompleted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereParentCompleted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task whereWishId($value)
+ * @property-read \Dzeparac\Child $child
+ * @property-read \Dzeparac\Wish $wish
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereChildCompleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereParentCompleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereWishId($value)
  * @mixin \Eloquent
  */
 class Task extends Model
