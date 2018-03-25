@@ -21,7 +21,7 @@ class CreateWishesTable extends Migration
 	        $table->double('price');
 	        $table->string('photo_url');
 	        $table->text('notes')->nullable();
-	        $table->boolean('flag_fulfilled')->default(false);
+	        $table->boolean('is_fulfilled')->default(false);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')

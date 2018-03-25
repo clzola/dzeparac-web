@@ -18,9 +18,8 @@ class CreateTasksTable extends Migration
             $table->unsignedInteger('wish_id');
             $table->unsignedInteger('child_id');
             $table->string('name');
-            $table->boolean('child_completed')->default(false);
-            $table->boolean('parent_completed')->default(false);
-            $table->boolean('fulfilled')->default(false);
+            $table->boolean('is_finished')->default(false);
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
 
             $table->foreign('child_id')->references('id')->on('children')
