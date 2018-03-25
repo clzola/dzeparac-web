@@ -11,15 +11,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $child_id
  * @property string|null $name
- * @property int|null $category_id
+ * @property int $category_id
  * @property float $price
  * @property string|null $photo_url
  * @property string|null $notes
- * @property int|null $wish_id
+ * @property int $wish_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Dzeparac\Category|null $category
- * @property-read \Dzeparac\Child $child
+ * @property-read \Dzeparac\User $child
  * @property-read \Dzeparac\Wish|null $wish
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\HistoryEntry whereChildId($value)
@@ -44,14 +44,15 @@ class HistoryEntry extends Model
 		'child_id' => 'integer',
 		'category_id' => 'integer',
 		'wish_id' => 'integer',
+		'price' => 'double',
 	];
 	
 	/**
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Child
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
 	 */
 	public function child()
 	{
-	    return $this->belongsTo(Child::class, 'child_id');
+	    return $this->belongsTo(User::class, 'child_id');
 	}
 	
 	/**

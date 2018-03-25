@@ -28,8 +28,11 @@ class CreateUsersTable extends Migration
             $table->string('code')->nullable();
             $table->string('photo_url')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
+            $table->double('money', 15, 2)->default(0);
 
+            $table->rememberToken();
             $table->timestamps();
+
 
             $table->foreign('parent_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('restrict');

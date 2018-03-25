@@ -15,17 +15,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $price
  * @property string $photo_url
  * @property string|null $notes
- * @property int $flag_fulfilled
+ * @property bool $is_fulfilled
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Dzeparac\Category $category
- * @property-read \Dzeparac\Child $child
+ * @property-read \Dzeparac\User $child
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Task[] $tasks
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereChildId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereFlagFulfilled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereIsFulfilled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish wherePhotoUrl($value)
@@ -44,15 +44,15 @@ class Wish extends Model
 		'child_id' => 'integer',
 		'category_id' => 'integer',
 		'price' => 'double',
-		'flag_fulfilled' => 'boolean'
+		'is_fulfilled' => 'boolean'
 	];
 
 	/**
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Child
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
 	 */
 	public function child()
 	{
-	    return $this->belongsTo(Child::class, 'child_id');
+	    return $this->belongsTo(User::class, 'child_id');
 	}
 
 	/**

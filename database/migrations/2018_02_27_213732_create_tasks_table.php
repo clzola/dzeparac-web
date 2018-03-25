@@ -22,7 +22,7 @@ class CreateTasksTable extends Migration
             $table->boolean('is_completed')->default(false);
             $table->timestamps();
 
-            $table->foreign('child_id')->references('id')->on('children')
+            $table->foreign('child_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('restrict');
 
             $table->foreign('wish_id')->references('id')->on('wishes')

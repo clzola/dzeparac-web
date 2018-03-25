@@ -27,7 +27,7 @@ class CreateWishesTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')
                 ->onUpdate('cascade')->onDelete('restrict');
 
-            $table->foreign('child_id')->references('id')->on('children')
+            $table->foreign('child_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('restrict');
         });
     }

@@ -12,18 +12,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $wish_id
  * @property int $child_id
  * @property string $name
- * @property boolean $child_completed
- * @property boolean $parent_completed
- * @property boolean $fulfilled
+ * @property bool $is_finished
+ * @property bool $is_completed
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property-read \Dzeparac\Child $child
+ * @property-read \Dzeparac\User $child
  * @property-read \Dzeparac\Wish $wish
- * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereChildCompleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereChildId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereIsCompleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereIsFinished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereParentCompleted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Task whereWishId($value)
  * @mixin \Eloquent
@@ -38,17 +38,16 @@ class Task extends Model
         'id' => 'integer',
         'wish_id' => 'integer',
 	    'child_id' => 'integer',
-	    'child_completed' => 'boolean',
-	    'parent_completed' => 'boolean',
-	    'fulfilled' => 'boolean',
+	    'is_finished' => 'boolean',
+	    'is_completed' => 'boolean',
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Child
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
      */
     public function child()
     {
-        return $this->belongsTo(Child::class, 'child_id');
+        return $this->belongsTo(User::class, 'child_id');
     }
 
     /**

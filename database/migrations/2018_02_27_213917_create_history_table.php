@@ -23,6 +23,15 @@ class CreateHistoryTable extends Migration
 	        $table->text('notes')->nullable();
 	        $table->unsignedInteger('wish_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('child_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('restrict');
+
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->onUpdate('cascade')->onDelete('restrict');
+
+            $table->foreign('wish_id')->references('id')->on('wishes')
+                ->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
