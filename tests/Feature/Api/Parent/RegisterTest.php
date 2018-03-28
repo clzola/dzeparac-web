@@ -8,11 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testRegister()
     {
 	    $response = $this->post('/api/parent/register', [
@@ -34,6 +29,7 @@ class RegisterTest extends TestCase
 	             ]);
     }
 
+
     public function testRegisterWithUsedEmail()
     {
 	    $response = $this->withHeader('Accept', 'application/json')
@@ -46,6 +42,7 @@ class RegisterTest extends TestCase
 	    $response->assertStatus(422)
 	             ->assertJsonValidationErrors("email");
     }
+
 
 	public function testRegisterWithUsedUsername()
 	{

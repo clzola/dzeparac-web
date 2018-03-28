@@ -2,6 +2,7 @@
 
 namespace Dzeparac\Http\Controllers\Api;
 
+use Dzeparac\Http\Requests\Api\LoginRequest;
 use Dzeparac\User;
 use Dzeparac\Http\Controllers\Controller;
 
@@ -21,17 +22,19 @@ class AuthController extends Controller
 	/**
 	 * Get a JWT via given credentials.
 	 *
+	 * @param LoginRequest $request
+	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function login()
+	public function login(LoginRequest $request)
 	{
-		$entity = request('entity', null);
+		$entity = $request->get('entity', null);
 
 		if($entity === "parent")
-			return $this->parentLogin();
+			return $this->parentLogin($request);
 
 		else if ($entity === "child")
-			return $this->childLogin();
+			return $this->childLogin($request);
 
 		return response('Bad request', 400);
 	}
@@ -85,16 +88,18 @@ class AuthController extends Controller
 	}
 
 	/**
+	 * @param LoginRequest $request
+	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	protected function parentLogin()
+	protected function parentLogin(LoginRequest $request)
 	{
-		$parent = User::whereUsername(request('username'))->first();
+		$parent = User::whereUsername($request->get('username'))->first();
 
 		if(is_null($parent))
 			return response()->json(['error' => 'Unauthorized/1'], 401);
 
-		$isPasswordCorrect = \Hash::check(request('password'), $parent->password);
+		$isPasswordCorrect = \Hash::check($request->get('password'), $parent->password);
 
 		if(!$isPasswordCorrect || !$token = \JWTAuth::fromSubject($parent))
 			return response()->json(['error' => 'Unauthorized/2'], 401);
@@ -103,11 +108,13 @@ class AuthController extends Controller
 	}
 
 	/**
+	 * @param LoginRequest $request
+	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	protected function childLogin()
+	protected function childLogin(LoginRequest $request)
 	{
-		$child = User::whereCode(request('code'))->first();
+		$child = User::whereCode($request->get('code'))->first();
 
 		if(is_null($child) || !$token = \JWTAuth::fromSubject($child))
 			return response()->json(['error' => 'Unauthorized/3'], 401);
