@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
 
             // Child specific columns
             $table->string('name')->nullable();
-            $table->string('code')->nullable();
-            $table->string('photo_url')->nullable();
+            $table->string('code')->nullable()->unique();
+            $table->string('photo_filename')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->double('money', 15, 2)->default(0);
 

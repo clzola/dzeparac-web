@@ -4,24 +4,34 @@ namespace Dzeparac\Http\Controllers\Api\Parent;
 
 use Dzeparac\HistoryEntry;
 use Dzeparac\Child;
+use Dzeparac\User;
 use Illuminate\Http\Request;
 use Dzeparac\Http\Controllers\Controller;
 
 class HistoryEntriesController extends Controller
 {
-    public function history(Child $child, Request $request)
+	/**
+	 * @param User $child
+	 *
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function history(User $child)
     {
+    	$this->authorize('history', [HistoryEntry::class, $child]);
+
         $query = HistoryEntry::query()
                     ->latest()
                     ->with(["child", "wish", "category", "wish.tasks"]);
 
-        if( $request->has('category_id') ) {
-            $categoryId = intval($request->get("category_id"));
-            if( $categoryId <= 0 )
-                $query->whereNull("category_id");
-            else $query->whereCategoryId($categoryId);
+        $categoryId = request('category_id', null);
+
+        if( !is_null($categoryId) ) {
+        	if($categoryId < 0)
+        		$query->whereNull('category_id');
+        	else $query->where('category_id', $categoryId);
         }
 
-        return [ "data" => $query->paginate()->all() ];
+        return $query->paginate();
     }
 }

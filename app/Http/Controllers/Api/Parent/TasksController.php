@@ -4,47 +4,49 @@ namespace Dzeparac\Http\Controllers\Api\Parent;
 
 use Dzeparac\Child;
 use Dzeparac\Task;
+use Dzeparac\User;
 use Dzeparac\Wish;
 use Illuminate\Http\Request;
 use Dzeparac\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {
-    public function complete(Child $child, Wish $wish, Task $task) 
+	/**
+	 * @param User $child
+	 * @param Task $task
+	 *
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function complete(User $child, Task $task)
     {
-        $task->parent_completed = true;
-        $task->save();
-        return ["data" => $task];
+    	$this->authorize('complete', $task);
+    	$task->update(['is_completed', true]);
     }
 
-    public function incomplete(Child $child, Wish $wish, Task $task) 
+	/**
+	 * @param User $child
+	 * @param Task $task
+	 *
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function undoComplete(User $child, Task $task)
     {
-        $task->parent_completed = false;
-        $task->save();
-        return ["data" => $task];
+	    $this->authorize('undoComplete', $task);
+	    $task->update(['is_completed', false]);
     }
 
-    public function create(Request $request, Child $child, Wish $wish) 
+	/**
+	 * @param User $user
+	 *
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function completeMany(User $user)
     {
-        return [
-            "data" => Task::create([
-                "name" => $request->get("name"),
-                "wish_id" => $wish->id,
-                "child_id" => $child->id,
-            ]),
-        ];
-    }
+    	$tasks = Task::whereIn('id', request('tasks'))->get();
 
-    public function completedTasks(Child $child)
-    {
-        $tasks = Task::whereChildCompleted(true)->whereParentCompleted(false)->with("wish")->orderBy('wish_id')->get();
-        return ["data" => $tasks];
-    }
+    	foreach ($tasks as $task)
+    		$this->authorize('complete', $task);
 
-    public function markManyAsCompleted(Request $request, Child $child) 
-    {
-        $tasks = $request->get("tasks");
-        Task::whereIn("id", $tasks)->update(['parent_completed' => true]);
-        return [ "data" => $tasks ];
+    	Task::whereIn('id', request('tasks'))->update(['is_completed' => true]);
     }
 }

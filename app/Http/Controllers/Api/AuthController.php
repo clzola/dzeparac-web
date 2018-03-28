@@ -112,6 +112,9 @@ class AuthController extends Controller
 		if(is_null($child) || !$token = \JWTAuth::fromSubject($child))
 			return response()->json(['error' => 'Unauthorized/3'], 401);
 
+		$child->code = strtoupper(str_random(6));
+		$child->save();
+
 		return $this->respondWithToken($token);
 	}
 }

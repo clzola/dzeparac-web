@@ -4,39 +4,28 @@ namespace Dzeparac\Http\Controllers\Api\Parent;
 
 use Dzeparac\Child;
 use Dzeparac\Support\UserProvider;
+use Dzeparac\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Dzeparac\Http\Controllers\Controller;
 
 class ChildrenController extends Controller
 {
 	/**
-	 * @param Request $request
-	 *
-	 * @return array
+	 * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+	 * @throws AuthorizationException
 	 */
-    public function children(Request $request)
+    public function children()
     {
-    	$parent = UserProvider::parentt($request);
+    	$this->authorize('children', User::class);
 
-    	$children = $parent->children->each(function (Child $child) {
-    		$child->setAttribute('wishes_count', $child->wishes()->where('flag_fulfilled', false)->count());
-		    $child->setAttribute('tasks_count', $child->tasks()->where('fulfilled', false)->count());
-		    $child->setAttribute('completed_tasks_count', $child->tasks()->where('child_completed', true)->where('parent_completed', false)->count());
-	    });
-
-    	return [ "data" => $children ];
-    }
-
-
-	/**
-	 * @param Request $request
-	 * @param Child $child
-	 *
-	 * @return array
-	 */
-    public function child(Request $request, Child $child)
-    {
-    	return [ "data" => $child ];
+		return User::whereParentId(auth()->id())->get()->map(function (User $user) {
+			return [
+				'id' => $user->id,
+				'name' => $user->name,
+				'photo_url' => $user->photo_url
+			];
+		});
     }
 
 
@@ -44,44 +33,67 @@ class ChildrenController extends Controller
 	 * @param Request $request
 	 *
 	 * @return array
+	 * @throws AuthorizationException
 	 */
     public function store(Request $request)
     {
-		\Log::info($request->getContent());
+		$this->authorize('addChild', User::class);
 
-	    $parent = UserProvider::parentt($request);
-    	$child = new Child();
+    	$child = new User($request->all());
+    	$filename = $request->file('photo')->store('public/children/photos');
 
-    	$filename = basename($request->file('photo')->store('public/children/photos'));
-
-    	$child->parent_id = $parent->id;
-    	$child->name = $request->get('name');
-    	$child->photo_url = "http://dzeparac.test/storage/children/photos/{$filename}";
-    	$child->code = strtoupper(str_random(10));
+    	$child->parent_id = auth()->id();
+    	$child->photo_filename = basename($filename);
+    	$child->code = strtoupper(str_random(6));
     	$child->save();
 
-    	return [ "data" => $child ];
+    	return [
+    		'id' => $child->id,
+		    'name' => $child->name,
+		    'photo_url' => $child->photo_url,
+	    ];
     }
+
+	/**
+	 * @param User $child
+	 *
+	 * @return array
+	 * @throws AuthorizationException
+	 */
+	public function child(User $child)
+	{
+		$this->authorize('showChild', $child);
+
+		return [
+			'id' => $child->id,
+			'name' => $child->name,
+			'photo_url' => $child->photo_url,
+		];
+	}
 
 
 	/**
 	 * @param Request $request
-	 * @param Child $child
+	 * @param User $child
 	 *
 	 * @return array
 	 */
-    public function update(Request $request, Child $child)
+    public function update(Request $request, User $child)
     {
-		$child->name = $request->get('name');
-		$child->code = strtoupper(str_random(10));
+
+		$child->name = request('name');
 
 		if( $request->has("photo") ) {
-			$filename = basename($request->file('photo')->store('children/photos'));
-			$child->photo_url = "http://dzeparac.me/children/photos/{$filename}";
+			$filename = $request->file('photo')->store('children/photos');
+			$child->photo_filename = basename($filename);
 		}
 
 	    $child->save();
 
-	    return [ "data" => $child ];
+	    return [
+		    'id' => $child->id,
+		    'name' => $child->name,
+		    'photo_url' => $child->photo_url,
+	    ];
     }
 }

@@ -15,12 +15,22 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Api'], function() {
 
-	// Auth APIv1
+	Route::post('/parent/register', 'ParentRegisterController@register');
+
+	// Auth API
 	Route::group(['prefix' => 'auth'], function() {
 		Route::post('/login', 'AuthController@login');
 		Route::post('/logout', 'AuthController@logout');
 		Route::get('/refresh', 'AuthController@refresh');
 		Route::get('/me', 'AuthController@me');
+	});
+
+	// Parent API
+	Route::group(['middleware' => 'auth:api', 'prefix' => 'parent'], function() {
+		Route::get('/children', 'Parent\ChildrenController@children');
+		Route::post('/children', 'Parent\ChildrenController@store');
+		Route::get('/children/{child}', 'Parent\ChildrenController@show');
+		Route::put('/children/{child}', 'Parent\ChildrenController@update');
 	});
 
 });

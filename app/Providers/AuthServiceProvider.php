@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Dzeparac\Model' => 'Dzeparac\Policies\ModelPolicy',
+        'Dzeparac\User' => 'Dzeparac\Policies\UserPolicy',
+        'Dzeparac\Category' => 'Dzeparac\Policies\CategoryPolicy',
     ];
 
     /**

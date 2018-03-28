@@ -11,17 +11,17 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Category::create([
+        \Dzeparac\Category::create([
         	"name" => "Kategorija A",
 	        "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
         ]);
 
-	    \App\Category::create([
+	    \Dzeparac\Category::create([
 		    "name" => "Kategorija B",
 		    "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
 	    ]);
 
-	    \App\Category::create([
+	    \Dzeparac\Category::create([
 		    "name" => "Kategorija C",
 		    "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
 	    ]);
