@@ -36,17 +36,17 @@ class TasksController extends Controller
     }
 
 	/**
-	 * @param User $user
+	 * @param User $child
 	 *
 	 * @throws \Illuminate\Auth\Access\AuthorizationException
 	 */
-    public function completeMany(User $user)
+    public function completeMany(User $child)
     {
-    	$tasks = Task::whereIn('id', request('tasks'))->get();
+    	$tasks = Task::query()->whereIn('id', request('tasks'))->get();
 
     	foreach ($tasks as $task)
     		$this->authorize('complete', $task);
 
-    	Task::whereIn('id', request('tasks'))->update(['is_completed' => true]);
+    	Task::query()->whereIn('id', request('tasks'))->update(['is_completed' => true]);
     }
 }
