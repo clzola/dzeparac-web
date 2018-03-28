@@ -2,41 +2,42 @@
 
 namespace Tests\Feature\Api\Parent;
 
+use Dzeparac\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
+	use RefreshDatabase;
+
     public function testRegister()
     {
-	    $response = $this->post('/api/parent/register', [
-		    'username' => 'admin1',
-		    'email' => 'admin@test.com',
-		    'password' => '123'
-	    ]);
+	    $response = $this->withHeader('Accept', 'application/json')
+	                     ->post('/api/parent/register', [
+	                     	'username' => 'parent',
+	                        'email' => 'parent@test.com',
+	                        'password' => '123'
+	                     ]);
 
 	    $response->assertStatus(200)
 	             ->assertJsonStructure([
 	             	 "id",
 		             "username",
 		             "email"
-	             ])
-	             ->assertJson([
-                    "id" => 1,
-	                "username" => "admin1",
-	                "email" => "admin@test.com",
 	             ]);
     }
 
 
     public function testRegisterWithUsedEmail()
     {
+    	$this->createTestUser();
+
 	    $response = $this->withHeader('Accept', 'application/json')
 	                     ->post('/api/parent/register', [
-	                     	'username' => 'admin2',
-	                        'email' => 'admin@test.com',
-	                        'password' => '123'
+		                     'username' => 'parent1',
+		                     'email' => 'parent@test.com',
+		                     'password' => '123'
 	                     ]);
 
 	    $response->assertStatus(422)
@@ -46,14 +47,29 @@ class RegisterTest extends TestCase
 
 	public function testRegisterWithUsedUsername()
 	{
+		$this->createTestUser();
+
 		$response = $this->withHeader('Accept', 'application/json')
 		                 ->post('/api/parent/register', [
-		                 	'username' => 'admin1',
-		                    'email' => 'admin2@test.com',
-		                    'password' => '123'
+			                 'username' => 'parent',
+			                 'email' => 'parent1@test.com',
+			                 'password' => '123'
 		                 ]);
 
 		$response->assertStatus(422)
 		         ->assertJsonValidationErrors("username");
+	}
+
+
+	private function createTestUser()
+	{
+		$user = new User([
+			'username' => 'parent',
+			'email' => 'parent@test.com',
+		]);
+
+		$user->password = bcrypt('123');
+		$user->is_parent = true;
+		$user->save();
 	}
 }

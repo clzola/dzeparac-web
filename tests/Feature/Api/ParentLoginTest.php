@@ -2,19 +2,24 @@
 
 namespace Tests\Feature\Api;
 
+use Dzeparac\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ParentLoginTest extends TestCase
 {
+	use RefreshDatabase;
+
     public function testLogin()
     {
+	    $this->createTestUser();
+
         $this->withHeader('Accept', 'application/json')
              ->post('/api/auth/login', [
-             	 'username' => 'admin1',
+	             'entity'   => 'parent',
+	             'username' => 'parent',
                  'password' => '123',
-	             'entity' => 'parent',
              ])
              ->assertStatus(200)
              ->assertJsonStructure([
@@ -27,6 +32,8 @@ class ParentLoginTest extends TestCase
 
     public function testWrongCredentials()
     {
+    	$this->createTestUser();
+
 	    $this->withHeader('Accept', 'application/json')
 	         ->post('/api/auth/login', [
 		         'username' => 'admin',
@@ -42,6 +49,8 @@ class ParentLoginTest extends TestCase
 
     public function testValidation()
     {
+	    $this->createTestUser();
+
 	    $this->withHeader('Accept', 'application/json')
 	         ->post('/api/auth/login', [
 		         'username' => 'admin',
@@ -56,5 +65,17 @@ class ParentLoginTest extends TestCase
 	         ])
 		    ->assertStatus(422)
 		    ->assertJsonValidationErrors(['username', 'password']);
+    }
+
+    private function createTestUser()
+    {
+	    $user = new User([
+		    'username' => 'parent',
+		    'email' => 'parent@test.com',
+	    ]);
+
+	    $user->password = bcrypt('123');
+	    $user->is_parent = true;
+	    $user->save();
     }
 }
