@@ -26,11 +26,12 @@ Route::group(['namespace' => 'Api'], function() {
 	});
 
 	// Parent API
-	Route::group(['middleware' => 'auth:api', 'prefix' => 'parent'], function() {
-		Route::get('/children', 'Parent\ChildrenController@children');
-		Route::post('/children', 'Parent\ChildrenController@store');
-		Route::get('/children/{child}', 'Parent\ChildrenController@show');
-		Route::put('/children/{child}', 'Parent\ChildrenController@update');
+	Route::group(['middleware' => 'auth:api', 'prefix' => 'parent', 'namespace' => 'Parent'], function() {
+		Route::get('/children/{child}/status', 'ChildStatusController@status');
+		Route::get('/children/{child}', 'ChildrenController@show');
+		Route::put('/children/{child}', 'ChildrenController@update');
+		Route::get('/children', 'ChildrenController@children');
+		Route::post('/children', 'ChildrenController@store');
 	});
 
 });
