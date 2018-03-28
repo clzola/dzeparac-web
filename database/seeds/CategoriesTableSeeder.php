@@ -12,17 +12,17 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         \Dzeparac\Category::create([
-        	"name" => "Kategorija A",
+        	"name" => "Igračke",
 	        "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
         ]);
 
 	    \Dzeparac\Category::create([
-		    "name" => "Kategorija B",
+		    "name" => "Namjernice",
 		    "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
 	    ]);
 
 	    \Dzeparac\Category::create([
-		    "name" => "Kategorija C",
+		    "name" => "Odjeća",
 		    "photo_url" => "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Toy-256.png",
 	    ]);
     }
