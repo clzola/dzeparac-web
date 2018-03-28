@@ -24,10 +24,10 @@ class HistoryEntriesController extends Controller
                     ->latest()
                     ->with(["child", "wish", "category", "wish.tasks"]);
 
-        $categoryId = request('category_id', null);
+        $categoryId = intval(request('category_id', -1));
 
         if( !is_null($categoryId) ) {
-        	if($categoryId < 0)
+        	if($categoryId <= 0)
         		$query->whereNull('category_id');
         	else $query->where('category_id', $categoryId);
         }
