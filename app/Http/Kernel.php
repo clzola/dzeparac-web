@@ -20,7 +20,6 @@ class Kernel extends HttpKernel
         \Dzeparac\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Dzeparac\Http\Middleware\TrustProxies::class,
-        XUserMiddleware::class,
     ];
 
     /**
