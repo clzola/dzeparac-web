@@ -11,44 +11,44 @@ class WishesTableSeeder extends Seeder
      */
     public function run()
     {
-    	\App\Wish::create([
+    	\Dzeparac\Wish::create([
     		'child_id' => 1,
     		'name' => 'W1',
 		    'category_id' => 1,
-		    'price' => 57,
+		    'price' => 16.99,
 		    'photo_url' => "https://picsum.photos/400/200/?image=806",
 		    'notes' => 'Lorem ispum dulum',
-		    'flag_fulfilled' => true,
+		    'is_fulfilled' => true,
 	    ]);
 
-	    \App\Wish::create([
+	    \Dzeparac\Wish::create([
 		    'child_id' => 1,
 		    'name' => 'W2',
 		    'category_id' => 1,
-		    'price' => 10,
+		    'price' => 10.55,
 		    'photo_url' => "https://picsum.photos/400/200/?image=200",
 		    'notes' => 'Lorem ispum dulum',
-		    'flag_fulfilled' => false,
+		    'is_fulfilled' => false,
 	    ]);
 
-	    \App\Wish::create([
+	    \Dzeparac\Wish::create([
 		    'child_id' => 1,
 		    'name' => 'W3',
 		    'category_id' => 1,
 		    'price' => 23,
 		    'photo_url' => "https://picsum.photos/400/200/?image=400",
 		    'notes' => 'Lorem ispum dulum',
-		    'flag_fulfilled' => false,
+		    'is_fulfilled' => false,
 	    ]);
 
-	    \App\Wish::create([
+	    \Dzeparac\Wish::create([
 		    'child_id' => 1,
 		    'name' => 'W4',
 		    'category_id' => 1,
 		    'price' => 30,
 		    'photo_url' => "https://picsum.photos/400/200/?image=700",
 		    'notes' => 'Lorem ispum dulum',
-		    'flag_fulfilled' => false,
+		    'is_fulfilled' => false,
 	    ]);
     }
 }

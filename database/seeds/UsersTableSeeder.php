@@ -24,5 +24,12 @@ class UsersTableSeeder extends Seeder
 	        'parent_id' => 1,
 	        'code' => 'ABCD',
         ]);
+
+	    \Dzeparac\User::create([
+		    'is_child' => true,
+		    'name' => 'Marko',
+		    'parent_id' => 1,
+		    'code' => 'QWER',
+	    ]);
     }
 }
