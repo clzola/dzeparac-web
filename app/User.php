@@ -73,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|User[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|User[]|User
      */
     public function children()
     {
@@ -81,7 +81,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|Wish[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|Wish[]|Wish
      */
     public function wishes()
     {
@@ -89,7 +89,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|HistoryEntry[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Support\Collection|HistoryEntry[]|HistoryEntry
      */
     public function historyEntries()
     {

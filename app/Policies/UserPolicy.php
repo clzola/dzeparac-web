@@ -60,4 +60,24 @@ class UserPolicy
     {
 	    return $user->is_parent && $child->is_child && $child->parent_id === $user->id;
     }
+
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+    public function moneyStatus(User $user)
+    {
+        return $user->is_child;
+    }
+
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+    public function addMoney(User $user)
+    {
+    	return $user->is_child;
+    }
 }

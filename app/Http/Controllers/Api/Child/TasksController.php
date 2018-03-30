@@ -10,26 +10,17 @@ use Dzeparac\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {
-    /** @var Child */
-    private $child;
-
-
-    /**
-     * TasksController constructor.
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->child = $request->get("user");
-    }
-
-
     /**
      * @return array
      */
     public function index()
     {
-        $wishes = $this->child->wishes()->where('flag_fulfilled', false)->with('tasks')->get();
+    	$child = \Auth::user();
+
+        $wishes = $child->wishes()
+                        ->fulfilled(false)
+                        ->with('tasks')
+                        ->get();
 
         $tasks = [
             "tasks" => [],
@@ -39,7 +30,7 @@ class TasksController extends Controller
 
         foreach ($wishes as $wish) {
             foreach ($wish->tasks as $task) {
-                $task->setRelation("wish", new Wish(["name" => $wish->name]));
+                $task->setRelation("wish", $wish);
 
                 if( !$task->child_completed )
                     $tasks["tasks"][] = $task;
@@ -50,30 +41,36 @@ class TasksController extends Controller
             }
         }
 
-        return ["data" => $tasks];
+        return $tasks;
     }
 
 
-    /**
-     * @param Task $task
-     * @return array
-     */
-    public function markAsCompleted(Task $task)
+	/**
+	 * @param Task $task
+	 *
+	 * @return void
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function finish(Task $task)
     {
-        $task->child_completed = true;
+    	$this->authorize('finish', $task);
+
+        $task->is_finished = true;
         $task->save();
-        return ["data" => $task];
     }
 
 
-    /**
-     * @param Task $task
-     * @return array
-     */
-    public function markAsNotCompleted(Task $task)
+	/**
+	 * @param Task $task
+	 *
+	 * @return void
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function undoFinish(Task $task)
     {
-        $task->child_completed = false;
+	    $this->authorize('undoFinish', $task);
+
+        $task->is_finished = false;
         $task->save();
-        return ["data" => $task];
     }
 }

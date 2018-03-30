@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Dzeparac\Category $category
  * @property-read \Dzeparac\User $child
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Task[] $tasks
+ * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish fulfilled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereChildId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Wish whereCreatedAt($value)
@@ -76,6 +77,16 @@ class Wish extends Model
 	public function category()
 	{
 	    return $this->belongsTo(Category::class, 'category_id');
+	}
+
+	/**
+	 * @param bool $value
+	 *
+	 * @return Wish|\Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeFulfilled($value = true)
+	{
+		return $this->whereIsFulfilled($value);
 	}
 
 	/**

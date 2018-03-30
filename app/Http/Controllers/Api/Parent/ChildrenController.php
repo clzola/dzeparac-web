@@ -36,10 +36,8 @@ class ChildrenController extends Controller
 		$this->authorize('addChild', User::class);
 
     	$child = new User($request->all());
-    	$filename = $request->file('photo')->store('public/children/photos');
-
+	    $child->photo_filename = $request->file('photo')->store('public/children/images');
     	$child->parent_id = auth()->id();
-    	$child->photo_filename = basename($filename);
     	$child->code = strtoupper(str_random(6));
     	$child->save();
 
@@ -68,12 +66,10 @@ class ChildrenController extends Controller
 	 */
     public function update(UpdateChildRequest $request, User $child)
     {
-		$child->name = request('name');
+		$child->name = $request->get('name');
 
-		if( $request->has("photo") ) {
-			$filename = $request->file('photo')->store('children/photos');
-			$child->photo_filename = basename($filename);
-		}
+		if( $request->has("photo") )
+			$child->photo_filename = $request->file('photo')->store('public/children/images');
 
 	    $child->save();
 

@@ -4,48 +4,52 @@ namespace Dzeparac\Http\Controllers\Api\Child;
 
 use Dzeparac\Child;
 use Dzeparac\HistoryEntry;
+use Dzeparac\Http\Requests\Api\Child\AddMoneyRequest;
+use Dzeparac\User;
 use Illuminate\Http\Request;
 use Dzeparac\Http\Controllers\Controller;
 
 class DzeparacController extends Controller
 {
-    /** @var Child */
-    private $child;
 
 
-    /**
-     * DzeparacController constructor.
-     * @param Request $request
-     */
-    public function __construct(Request $request)
+	/**
+	 * @return double
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
+    public function status()
     {
-        $this->child = $request->get("user");
+    	$this->authorize('moneyStatus', User::class);
+
+        return auth()->user()->money;
     }
 
 
-    /**
-     * @return array
-     */
-    public function index()
+	/**
+	 * @param AddMoneyRequest $request
+	 *
+	 * @return HistoryEntry
+	 * @throws \Exception
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 * @throws \Throwable
+	 */
+    public function add(AddMoneyRequest $request)
     {
-        return ["data" => $this->child->money];
-    }
+    	$this->authorize('addMoney', User::class);
 
+    	return \DB::transaction(function() use ($request) {
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function add(Request $request)
-    {
-        $this->child->money += doubleval($request->get('price'));
-        $this->child->save();
+    	    $child = \Auth::user();
 
-        $entry = $entry = new HistoryEntry($request->only(['price', 'notes']));
-        $entry->name = 'Džeparac';
-        $entry->child_id = $this->child->id;
-        $entry->save();
+	        $child->money += doubleval($request->get('money'));
+	        $child->save();
 
-        return [ "data" => $entry ];
+	        $entry = $entry = new HistoryEntry($request->only(['money', 'notes']));
+	        $entry->name = 'Džeparac';
+	        $entry->child_id = $child->id;
+	        $entry->save();
+
+            return $entry;
+	    });
     }
 }

@@ -5,33 +5,24 @@ namespace Dzeparac\Http\Controllers\Api\Child;
 use Dzeparac\Child;
 use Dzeparac\HistoryEntry;
 use Dzeparac\Http\Controllers\Controller;
+use Dzeparac\Http\Requests\Api\Child\CreateHistoryEntryRequest;
+use Dzeparac\Http\Requests\Api\Child\UpdateHistoryEntryRequest;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    /** @var Child */
-    private $child;
-
-
-    /**
-     * HistoryController constructor.
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->child = $request->get("user");
-    }
-
-
-    /**
-     * @param Request $request
-     * @return array
-     */
+	/**
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+	 */
     public function index(Request $request)
     {
+    	$child = \Auth::user();
+
         $query = HistoryEntry::with(['category', 'wish', 'wish.tasks'])
                              ->latest()
-                             ->whereChildId($this->child->id);
+                             ->whereChildId($child->id);
 
         if($request->has('category_id')) {
             $categoryId = intval($request->get('category_id'));
@@ -40,56 +31,79 @@ class HistoryController extends Controller
             else $query->whereNull('category_id');
         }
 
-        return ["data" => $query->paginate(15)->items()];
+        return $query->paginate();
     }
 
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function store(Request $request)
+	/**
+	 * @param CreateHistoryEntryRequest $request
+	 *
+	 * @return array
+	 * @throws \Exception
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 * @throws \Throwable
+	 */
+    public function store(CreateHistoryEntryRequest $request)
     {
-        $entry = new HistoryEntry($request->only(['name', 'category_id', 'price', 'notes']));
-        $filename = basename($request->file('photo')->store('public/history/photos'));
-        $entry->photo_url = "http://dzeparac.test/storage/history/photos/{$filename}";
-        $entry->child_id = $this->child->id;
-        $entry->save();
+	    $this->authorize('create', HistoryEntry::class);
 
-        $this->child->money -= $entry->price;
-        $this->child->save();
+    	return \DB::transaction(function() use ($request) {
+	        $child = \Auth::user();
+	        $entry = new HistoryEntry($request->only(['name', 'category_id', 'price', 'notes']));
 
-        return ["data" => $entry];
+		    $entry->photo_filename = basename($request->file('photo')->store('public/history/images'));
+	        $entry->child_id = $child->id;
+	        $entry->save();
+
+	        $child->money -= $entry->price;
+	        $child->save();
+
+	        $entry->load('category');
+
+	        return $entry;
+	    });
     }
 
 
-    /**
-     * @param HistoryEntry $entry
-     * @return array
-     */
+	/**
+	 * @param HistoryEntry $entry
+	 *
+	 * @return HistoryEntry
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 */
     public function show(HistoryEntry $entry)
     {
+	    $this->authorize('show', HistoryEntry::class);
+
         $entry->load(['category', 'wish', 'wish.tasks']);
-        return ["data" => $entry];
+
+        return $entry;
     }
 
 
-    /**
-     * @param Request $request
-     * @param HistoryEntry $entry
-     * @return array
-     */
-    public function update(Request $request, HistoryEntry $entry)
+	/**
+	 * @param UpdateHistoryEntryRequest $request
+	 * @param HistoryEntry $entry
+	 *
+	 * @return array
+	 * @throws \Exception
+	 * @throws \Illuminate\Auth\Access\AuthorizationException
+	 * @throws \Throwable
+	 */
+    public function update(UpdateHistoryEntryRequest $request, HistoryEntry $entry)
     {
-        $entry->fill($request->only(['name', 'category_id', 'price', 'notes']));
+	    $this->authorize('update', HistoryEntry::class);
 
-        if($request->hasFile('photo')) {
-            $filename = basename($request->file('photo')->store('public/history/photos'));
-            $entry->photo_url = "http://dzeparac.test/storage/history/photos/{$filename}";
-        }
+	    return \DB::transaction(function() use ($request, $entry) {
+            $entry->fill($request->only(['name', 'category_id', 'price', 'notes']));
 
-        $entry->save();
-        $entry->load("category");
-        return ["data" => $entry];
+            if($request->hasFile('photo'))
+	            $entry->photo_filename = basename($request->file('photo')->store('public/history/images'));
+
+            $entry->save();
+            $entry->load("category");
+
+            return $entry;
+	    });
     }
 }
