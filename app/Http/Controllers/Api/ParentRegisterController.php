@@ -11,7 +11,7 @@ class ParentRegisterController extends Controller
 	/**
 	 * @param RegisterRequest $request
 	 *
-	 * @return array
+	 * @return User
 	 */
     public function register(RegisterRequest $request)
     {
@@ -19,10 +19,6 @@ class ParentRegisterController extends Controller
     	$user->password = bcrypt($request->get('password'));
     	$user->save();
 
-    	return [
-            'id' => $user->id,
-		    'username' => $user->username,
-		    'email' => $user->email,
-	    ];
+    	return $user;
     }
 }

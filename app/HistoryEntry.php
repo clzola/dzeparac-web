@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $name
  * @property int $category_id
  * @property float $price
- * @property string|null $photo_url
+ * @property string|null $photo_filename
  * @property string|null $notes
  * @property int $wish_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read string $photo_url
  * @property-read \Dzeparac\Category|null $category
  * @property-read \Dzeparac\User $child
  * @property-read \Dzeparac\Wish|null $wish
@@ -37,7 +38,13 @@ class HistoryEntry extends Model
 {
 	protected $table = 'history';
 	protected $primaryKey = 'id';
-	protected $guarded = [];
+
+	protected $fillable = [
+		'category_id',
+		'name',
+		'price',
+		'notes',
+	];
 
 	public $casts = [
 	    'id' => 'integer',
@@ -69,5 +76,13 @@ class HistoryEntry extends Model
 	public function category()
 	{
 	    return $this->belongsTo(Category::class, 'category_id');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPhotoUrlAttribute()
+	{
+		return "http://dzeparac.me/storage/history/images/{$this->photo_filename}";
 	}
 }

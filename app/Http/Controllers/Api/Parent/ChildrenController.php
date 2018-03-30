@@ -3,6 +3,8 @@
 namespace Dzeparac\Http\Controllers\Api\Parent;
 
 use Dzeparac\Child;
+use Dzeparac\Http\Requests\Api\Parent\CreateChildRequest;
+use Dzeparac\Http\Requests\Api\Parent\UpdateChildRequest;
 use Dzeparac\Support\UserProvider;
 use Dzeparac\User;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -19,23 +21,17 @@ class ChildrenController extends Controller
     {
     	$this->authorize('children', User::class);
 
-		return User::whereParentId(auth()->id())->get()->map(function (User $user) {
-			return [
-				'id' => $user->id,
-				'name' => $user->name,
-				'photo_url' => $user->photo_url
-			];
-		});
+		return User::whereParentId(auth()->id())->get();
     }
 
 
 	/**
-	 * @param Request $request
+	 * @param CreateChildRequest $request
 	 *
-	 * @return array
+	 * @return User
 	 * @throws AuthorizationException
 	 */
-    public function store(Request $request)
+    public function store(CreateChildRequest $request)
     {
 		$this->authorize('addChild', User::class);
 
@@ -47,40 +43,31 @@ class ChildrenController extends Controller
     	$child->code = strtoupper(str_random(6));
     	$child->save();
 
-    	return [
-    		'id' => $child->id,
-		    'name' => $child->name,
-		    'photo_url' => $child->photo_url,
-	    ];
+    	return $child;
     }
 
 	/**
 	 * @param User $child
 	 *
-	 * @return array
+	 * @return User
 	 * @throws AuthorizationException
 	 */
 	public function child(User $child)
 	{
 		$this->authorize('showChild', $child);
 
-		return [
-			'id' => $child->id,
-			'name' => $child->name,
-			'photo_url' => $child->photo_url,
-		];
+		return $child;
 	}
 
 
 	/**
-	 * @param Request $request
+	 * @param UpdateChildRequest $request
 	 * @param User $child
 	 *
-	 * @return array
+	 * @return User
 	 */
-    public function update(Request $request, User $child)
+    public function update(UpdateChildRequest $request, User $child)
     {
-
 		$child->name = request('name');
 
 		if( $request->has("photo") ) {
@@ -90,10 +77,6 @@ class ChildrenController extends Controller
 
 	    $child->save();
 
-	    return [
-		    'id' => $child->id,
-		    'name' => $child->name,
-		    'photo_url' => $child->photo_url,
-	    ];
+	    return $child;
     }
 }

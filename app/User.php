@@ -23,9 +23,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property int $parent_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @property string $photo_url
+ * @property-read string $photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\User[] $children
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\HistoryEntry[] $historyEntries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\HistoryEntry[] $history_entries
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Wish[] $wishes
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\User whereCode($value)
@@ -57,6 +58,8 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
+    	'is_parent',
+	    'is_child',
         'password',
 	    'remember_token',
     ];
@@ -118,6 +121,6 @@ class User extends Authenticatable implements JWTSubject
 	 */
 	public function getPhotoUrlAttribute()
 	{
-		return "http://dzeparac.test/storage/children/{$this->photo_filename}";
+		return "http://dzeparac.test/storage/children/images/{$this->photo_filename}";
 	}
 }

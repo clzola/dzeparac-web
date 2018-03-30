@@ -1,6 +1,6 @@
 <?php
 
-namespace Dzeparac\Http\Controllers\Api\Parent;
+namespace Dzeparac\Http\Controllers\Api;
 
 use Dzeparac\Category;
 use Illuminate\Http\Request;

@@ -19,7 +19,7 @@ class CreateHistoryTable extends Migration
 	        $table->string('name')->nullable();
 	        $table->unsignedInteger('category_id')->nullable();
 	        $table->double('price');
-	        $table->string('photo_url')->nullable();
+	        $table->string('photo_filename')->nullable();
 	        $table->text('notes')->nullable();
 	        $table->unsignedInteger('wish_id')->nullable();
             $table->timestamps();

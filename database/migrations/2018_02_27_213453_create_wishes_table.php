@@ -19,7 +19,7 @@ class CreateWishesTable extends Migration
 	        $table->string('name');
 	        $table->unsignedInteger('category_id');
 	        $table->double('price');
-	        $table->string('photo_url');
+	        $table->string('photo_filename');
 	        $table->text('notes')->nullable();
 	        $table->boolean('is_fulfilled')->default(false);
             $table->timestamps();

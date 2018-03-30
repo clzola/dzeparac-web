@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property string $photo_url
+ * @property string $photo_filename
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read string $photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\HistoryEntry[] $historyEntries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\HistoryEntry[] $history_entries
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Wish[] $wishes
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Dzeparac\Category whereId($value)
@@ -28,7 +30,7 @@ class Category extends Model
 
 	protected $fillable = [
 		'name',
-		'photo_url',
+		'photo_filename',
 	];
 
 	public $casts = [
@@ -50,5 +52,13 @@ class Category extends Model
 	public function historyEntries()
 	{
 	    return $this->hasMany(HistoryEntry::class, 'category_id');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPhotoUrlAttribute()
+	{
+		return "http://dzeparac.me/storage/categories/images/{$this->photo_filename}";
 	}
 }

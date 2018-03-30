@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property int $category_id
  * @property float $price
- * @property string $photo_url
+ * @property string $photo_filename
  * @property string|null $notes
  * @property bool $is_fulfilled
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property-read string $photo_url
  * @property-read \Dzeparac\Category $category
  * @property-read \Dzeparac\User $child
  * @property-read \Illuminate\Database\Eloquent\Collection|\Dzeparac\Task[] $tasks
@@ -37,7 +38,13 @@ class Wish extends Model
 {
 	protected $table = 'wishes';
 	protected $primaryKey = 'id';
-	protected $guarded = [];
+
+	protected $fillable = [
+		'category_id',
+		'name',
+		'price',
+		'notes'
+	];
 
 	public $casts = [
 	    'id' => 'integer',
@@ -69,5 +76,13 @@ class Wish extends Model
 	public function category()
 	{
 	    return $this->belongsTo(Category::class, 'category_id');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPhotoUrlAttribute()
+	{
+		return "http://dzeparac.me/storage/wishes/images/{$this->photo_filename}";
 	}
 }

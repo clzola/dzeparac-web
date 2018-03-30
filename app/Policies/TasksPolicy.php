@@ -4,6 +4,7 @@ namespace Dzeparac\Policies;
 
 use Dzeparac\Task;
 use Dzeparac\User;
+use Dzeparac\Wish;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TasksPolicy
@@ -22,12 +23,13 @@ class TasksPolicy
 
 	/**
 	 * @param User $user
+	 * @param Wish $wish
 	 *
 	 * @return bool
 	 */
-    public function create(User $user)
+    public function create(User $user, Wish $wish)
     {
-    	return $user->is_parent;
+    	return $user->is_parent && $wish->child->parent_id === $user->id;
     }
 
 	/**
